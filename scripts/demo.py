@@ -1,3 +1,7 @@
+"""
+This is an example script that uses mpi4py's "new" process pool to do a set of parallel calculations.
+"""
+
 import os
 import time
 
@@ -10,18 +14,6 @@ def worker(x):
     return x * x
 
 
-def callback(future):
-    result = future.result()
-    print(f"Result received on process {os.environ['OMPI_COMM_WORLD_RANK']}: {result}")
-
-
 if __name__ == "__main__":
     with MPIPoolExecutor() as pool:
-        futures = []
-        for x in range(128):
-            f = pool.submit(worker, x)
-            f.add_done_callback(callback)
-            futures.append(f)
-
-        # Optionally, wait for all to complete
-        # results = [f.result() for f in futures]
+        results = list(pool.map(worker, range(128)))
