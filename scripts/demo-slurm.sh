@@ -6,7 +6,7 @@
 #SBATCH -t 00:20:00
 #SBATCH -p gen
 
-cd /mnt/ceph/users/apricewhelan/projects/mpipool-2025/scripts
+cd /mnt/ceph/users/apricewhelan/projects/mpipool-2025
 source .venv/bin/activate
 
-mpirun python -m mpi4py.futures demo.py
+mpirun python -m mpi4py.futures scripts/demo.py
